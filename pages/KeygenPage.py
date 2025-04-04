@@ -129,39 +129,6 @@ class KeygenPage(QWidget):
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Failed to save keys:\n{str(e)}")
 
-    def save_to_file_btn_clicked(self):
-        if not self.is_encryption and not self.is_decryption:
-            QMessageBox.warning(self, "Warning", "No data to be saved")
-            return
-        
-        text = None
-        if self.is_encryption:
-            cipherText = self.ciphertext_output.toPlainText()
-            if not cipherText:
-                QMessageBox.warning(self, "Warning", "No cipher text to save. Check the decryption first.")
-                return
-            text = cipherText
-        
-        if self.is_decryption:
-            plainText = self.plaintext_input.toPlainText()
-            if not plainText:
-                QMessageBox.warning(self, "Warning", "No plain text to save. Check the encryption first.")
-                return
-            text = plainText
-
-        # Open file dialog to save the combined content
-        file_path, _ = QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);;All Files (*)")
-        if file_path and text:
-            self.save_to_file(file_path, text)
-
-    def save_to_file(self, file_path, text):
-        try:
-            with open(file_path, 'w') as file:
-                file.write(text)
-            QMessageBox.information(self, "Success", "File saved successfully.")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to save plain text file: {e}")
-
     def monitor_resources(self, interval=1):
         cpu_usage, memory_usage = get_resource_usage(interval)
         return cpu_usage, memory_usage
