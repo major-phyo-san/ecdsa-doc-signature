@@ -1,8 +1,8 @@
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import ec, ed25519
 
-from file_hasher import compute_file_hash
+from helpers.file_hasher import compute_file_hash
+from helpers.keyloaders import load_private_key_from_file
 
 # 🔏 Signing Function (Files)
 def sign_file(private_key_path: str, file_path: str) -> bytes:
@@ -18,23 +18,6 @@ def sign_file(private_key_path: str, file_path: str) -> bytes:
         return private_key.sign(file_hash, ec.ECDSA(hashes.SHA256()))  # ECDSA uses hashing
     else:
         raise ValueError("Unsupported key type")
-    
-def load_private_key_from_file(file_path: str, passphrase: str = None):
-    with open(file_path, "rb") as f:
-        pem_data = f.read()
-    
-    # Convert passphrase to bytes if provided
-    password_bytes = passphrase.encode() if passphrase else None
-
-    try:
-        private_key = serialization.load_pem_private_key(
-            pem_data,
-            password=password_bytes,
-            backend=default_backend()
-        )
-        return private_key
-    except ValueError as e:
-        raise ValueError(f"Failed to load private key: {e}")
     
 def save_signature_to_file(signature: bytes, original_file_path: str):
     signature_file_path = original_file_path + ".sig"    

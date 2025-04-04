@@ -1,5 +1,4 @@
 import os
-import psutil
 import time
 import tracemalloc
 
@@ -23,10 +22,10 @@ class SignPage(QWidget):
         self.plaintext_label = QLabel("Plaintext:")
         self.ciphertext_label = QLabel("Ciphertext:")
 
-        # Create and configure input fields
-        self.shift_input = QTextEdit()        
-        self.shift_input.setPlaceholderText("Key must be one of 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23 and 25")
-        self.shift_input.setStyleSheet("font-size: 18px; padding: 5px; height: 20px; ")
+        # # Create and configure input fields
+        # self.shift_input = QTextEdit()        
+        # self.shift_input.setPlaceholderText("Key must be one of 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23 and 25")
+        # self.shift_input.setStyleSheet("font-size: 18px; padding: 5px; height: 20px; ")
 
         self.docfile_button = QPushButton("Select document file")
         self.docfile_button.setFixedWidth(150)  # Set fixed width
@@ -40,11 +39,6 @@ class SignPage(QWidget):
         docfile_layout.addWidget(self.docfile_button)
         docfile_layout.addWidget(self.docfile_label)
         docfile_layout.addStretch()
-
-        # self.plaintext_input = QTextEdit()
-        # self.plaintext_input.setReadOnly(True)
-        # self.plaintext_input.setFixedHeight(90)
-        # self.plaintext_input.setStyleSheet("font-size: 12px; margin-bottom: 25px;")
 
         self.privatekeyfile_button = QPushButton("Select private key file")
         self.privatekeyfile_button.setFixedWidth(150)  # Set fixed width
@@ -83,8 +77,6 @@ class SignPage(QWidget):
         button_layout = QHBoxLayout()
         button_layout.addStretch(1)
         button_layout.addWidget(sign_button)
-        # button_layout.addWidget(decrypt_button)
-        # button_layout.addWidget(attack_button)
         button_layout.addWidget(save_button)
         button_layout.addStretch(1)
 
@@ -111,7 +103,6 @@ class SignPage(QWidget):
         self.docfile_path = None
         self.privatekey_file_path = None
         self.signature = None
-        self.validKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
 
     def go_back(self):
         self.docfile_path = None
@@ -121,7 +112,8 @@ class SignPage(QWidget):
         # self.ciphertext_output.setPlainText("")
         # self.key_result_output.setPlainText("")
         self.analysis_output.setPlainText("")
-        self.shift_input.setPlainText(None)
+        self.docfile_label.setText("No file selected")
+        self.privatekeyfile_label.setText("No private key selected")
         self.docfile_path = None
         self.privatekey_file_path = None
         self.stack.setCurrentIndex(0)
@@ -136,7 +128,6 @@ class SignPage(QWidget):
         self.analysis_output.setPlainText("")
         self.docfile_label.setText("No file selected")
         self.privatekeyfile_label.setText("No private key selected")
-        self.shift_input.setPlainText(None)
         self.docfile_path = None
         self.privatekey_file_path = None
             
