@@ -35,7 +35,7 @@ class MainPage(QWidget):
         button_layout = QHBoxLayout()
         button_layout.addWidget(button1)
         button_layout.addWidget(button2)
-        button_layout.addWidget(button3)
+        # button_layout.addWidget(button3)
 
         # Center the buttons horizontally
         button_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
