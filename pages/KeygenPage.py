@@ -3,6 +3,8 @@ import psutil
 import time
 import tracemalloc
 
+from datetime import datetime
+
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QComboBox, QTextEdit, QMessageBox, QFileDialog, QDialog
 from PyQt6.QtCore import Qt
 
@@ -106,11 +108,12 @@ class KeygenPage(QWidget):
         directory = QFileDialog.getExistingDirectory(self, "Select Save Directory")
 
         if directory:  # Ensure the user selected a valid directory
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
             public_key = self.keypair["public_pem"]
             private_key = self.keypair["private_pem"]
             # Define fixed file names
-            private_key_name = f"{self.select_box.currentText()}_private.pem"
-            public_key_name = f"{self.select_box.currentText()}_public.pem"
+            private_key_name = f"{timestamp}_{self.select_box.currentText()}_private.pem"
+            public_key_name = f"{timestamp}_{self.select_box.currentText()}_public.pem"
             public_key_path = os.path.join(directory, public_key_name)
             private_key_path = os.path.join(directory, private_key_name)
 
