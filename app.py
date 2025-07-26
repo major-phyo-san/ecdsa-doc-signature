@@ -27,18 +27,20 @@ class MainWindow(QTabWidget):
 def apply_stylesheet(app):
     app.setStyleSheet("""
         QWidget {
-            background: #f5f7fa;
+            background: #F1F8F4;
             font-family: 'Segoe UI', Arial, sans-serif;
             font-size: 15px;
         }
+
         QLabel {
-            color: #23198c;
+            color: #2E7D32;
             font-size: 18px;
             font-weight: 500;
         }
+
         QPushButton {
-            background-color: #b3d8e3;
-            color: #23198c;
+            background-color: #2E7D32;
+            color: #ffffff;
             border: none;
             border-radius: 8px;
             padding: 10px 18px;
@@ -47,50 +49,58 @@ def apply_stylesheet(app):
             min-width: 180px;
             max-width: 240px;
         }
+
         QPushButton:hover {
-            background-color: #7fc7e3;
-            color: #fff;
+            background-color: #43A047;
+            color: #ffffff;
         }
+
         QPushButton:pressed {
-            background-color: #5ba7c5;
+            background-color: #1B5E20;
         }
+
         QLineEdit, QTextEdit {
-            background: #fff;
-            border: 1.5px solid #b3d8e3;
+            background: #ffffff;
+            border: 1.5px solid #A5D6A7;
             border-radius: 6px;
             padding: 6px;
             font-size: 16px;
         }
+
         QTabWidget::pane {
-            border: 2px solid #b3d8e3;
+            border: 2px solid #A5D6A7;
             border-radius: 10px;
             margin: 16px 8px 8px 8px;
             padding: 12px;
         }
+
         QTabBar::tab {
-            background: #eaf6fb;
-            color: #23198c;
-            border: 1px solid #b3d8e3;
+            background: #F1F8F4;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
             border-radius: 8px 8px 0 0;
             min-width: 40px;
             min-height: 18px;
             margin-right: 3px;
             margin-top: 18px;
-            margin-left: 8px; /* Add margin at the start of tabs */
+            margin-left: 8px;
             padding: 4px 12px 4px 12px;
             font-size: 15px;
             font-weight: 600;
         }
+
         QTabBar::tab:first {
-            margin-left: 18px; /* Extra margin for the very first tab */
+            margin-left: 18px;
         }
+
         QTabBar::tab:selected {
-            background: #b3d8e3;
-            color: #23198c;
+            background: #2E7D32;
+            color: #ffffff;
         }
+
         QTabBar::tab:hover {
-            background: #7fc7e3;
-            color: #fff;
+            background: #43A047;
+            color: #ffffff;
         }
     """)
 
