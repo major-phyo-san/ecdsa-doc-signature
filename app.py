@@ -22,7 +22,7 @@ class MainWindow(QTabWidget):
         # Add tabs
         self.addTab(self.page1, "Key Pair Generation")
         self.addTab(self.page2, "Sign Documents")
-        self.addTab(self.page3, "Verify Documents")
+        # self.addTab(self.page3, "Verify Documents")
 
 def apply_stylesheet(app):
     app.setStyleSheet("""
