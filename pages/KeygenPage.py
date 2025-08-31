@@ -8,7 +8,6 @@ from datetime import datetime
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QComboBox, QTextEdit, QMessageBox, QFileDialog, QDialog
 from PyQt6.QtCore import Qt
 
-from helpers.analytics import get_resource_usage
 from helpers.keygen import generate_keypair
 
 class KeygenPage(QWidget):
@@ -122,6 +121,6 @@ class KeygenPage(QWidget):
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Failed to save keys:\n{str(e)}")
 
-    def monitor_resources(self, interval=1):
-        cpu_usage, memory_usage = get_resource_usage(interval)
-        return cpu_usage, memory_usage
+    # def monitor_resources(self, interval=1):
+    #     cpu_usage, memory_usage = get_resource_usage(interval)
+    #     return cpu_usage, memory_usage

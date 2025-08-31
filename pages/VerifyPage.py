@@ -5,8 +5,7 @@ import tracemalloc
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QTextEdit, QMessageBox, QFileDialog, QDialog
 from PyQt6.QtCore import Qt
 
-from helpers.analytics import get_resource_usage
-from helpers.verify import verify_file_signature
+# from helpers.verify import verify_file_signature
 
 class VerifyPage(QWidget):
     def __init__(self,stack):
@@ -166,10 +165,10 @@ class VerifyPage(QWidget):
         try:
             tracemalloc.start()
             start_time = time.time()        
-            if verify_file_signature(self.publickey_file_path, self.docfile_path, self.signaturefile_path):
-                QMessageBox.information(self, "Success", "Document is valid")
-            else:
-                QMessageBox.warning(self, "Warning", "Document is invalid")
+            # if verify_file_signature(self.publickey_file_path, self.docfile_path, self.signaturefile_path):
+            #     QMessageBox.information(self, "Success", "Document is valid")
+            # else:
+            #     QMessageBox.warning(self, "Warning", "Document is invalid")
             end_time = time.time()
             current, peak = tracemalloc.get_traced_memory()
             time_taken_ms = (end_time - start_time) * 10**3
@@ -186,6 +185,6 @@ class VerifyPage(QWidget):
             QMessageBox.critical(self, "Error", repr(e))
             return
         
-    def monitor_resources(self, interval=1):
-        cpu_usage, memory_usage = get_resource_usage(interval)
-        return cpu_usage, memory_usage
+    # def monitor_resources(self, interval=1):
+    #     cpu_usage, memory_usage = get_resource_usage(interval)
+    #     return cpu_usage, memory_usage

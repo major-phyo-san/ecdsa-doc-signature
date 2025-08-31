@@ -5,7 +5,6 @@ import tracemalloc
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QTextEdit, QMessageBox, QFileDialog, QDialog
 from PyQt6.QtCore import Qt
 
-from helpers.analytics import get_resource_usage
 from helpers.sign import sign_file, save_signature_to_file
 
 class SignPage(QWidget):
@@ -166,15 +165,15 @@ class SignPage(QWidget):
             end_time = time.time()
             current, peak = tracemalloc.get_traced_memory()
             time_taken_ms = (end_time - start_time) * 10**3
-            cpu_usage, memory_usage = self.monitor_resources()
+            # cpu_usage, memory_usage = self.monitor_resources()
 
-            timeTakenAnalysis = f"Time taken: {time_taken_ms:.2f} ms"
-            cpuUsageAnalysis = f"CPU usage: {cpu_usage}%"        
-            memoryUsageAnalysis = f"Memory usage: {peak / 10**3} KB"        
-            combinedAnalysis = f"{timeTakenAnalysis}"
+            # timeTakenAnalysis = f"Time taken: {time_taken_ms:.2f} ms"
+            # cpuUsageAnalysis = f"CPU usage: {cpu_usage}%"        
+            # memoryUsageAnalysis = f"Memory usage: {peak / 10**3} KB"        
+            # combinedAnalysis = f"{timeTakenAnalysis}"
             # combinedAnalysis = f"{timeTakenAnalysis}\n{cpuUsageAnalysis}\n{memoryUsageAnalysis}"
 
-            self.analysis_output.setPlainText(combinedAnalysis)
+            # self.analysis_output.setPlainText(combinedAnalysis)
             QMessageBox.information(self, "Success", "Document signed successfully")
         except Exception as e:
             QMessageBox.critical(self, "Error", repr(e))
@@ -191,6 +190,6 @@ class SignPage(QWidget):
             QMessageBox.critical(self, "Error", "Signature file failed to save")
             return
         
-    def monitor_resources(self, interval=1):
-        cpu_usage, memory_usage = get_resource_usage(interval)
-        return cpu_usage, memory_usage
+    # def monitor_resources(self, interval=1):
+    #     cpu_usage, memory_usage = get_resource_usage(interval)
+    #     return cpu_usage, memory_usage
