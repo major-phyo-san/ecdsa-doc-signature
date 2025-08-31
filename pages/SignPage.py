@@ -17,51 +17,22 @@ class SignPage(QWidget):
         pageLabel = QLabel("Sign Documents")
         pageLabel.setStyleSheet("font-size: 24px; padding: 10px;")
 
-        #  Create and configure labels
-        self.shift_label = QLabel("Key:")
-        self.plaintext_label = QLabel("Plaintext:")
-        self.ciphertext_label = QLabel("Ciphertext:")
-
-        # # Create and configure input fields
-        # self.shift_input = QTextEdit()        
-        # self.shift_input.setPlaceholderText("Key must be one of 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23 and 25")
-        # self.shift_input.setStyleSheet("font-size: 18px; padding: 5px; height: 20px; ")
-
-        self.docfile_button = QPushButton("Select document file")
-        self.docfile_button.setFixedWidth(150)  # Set fixed width
-        self.docfile_button.setFixedHeight(25)  # Set fixed height
+        self.docfile_button = QPushButton("Select document file")        
         self.docfile_button.clicked.connect(lambda: self.pick_doc_file())
+        self.docfile_button.setStyleSheet("font-size: 18px; padding: 10px;")
         self.docfile_label = QLabel("No file selected")
+        self.docfile_label.setStyleSheet("font-size: 12px; padding: 10px;")
 
-        # Layout for file picker 1
-        docfile_layout = QHBoxLayout()
-        docfile_layout.addStretch()
-        docfile_layout.addWidget(self.docfile_button)
-        docfile_layout.addWidget(self.docfile_label)
-        docfile_layout.addStretch()
-
-        self.privatekeyfile_button = QPushButton("Select private key file")
-        self.privatekeyfile_button.setFixedWidth(150)  # Set fixed width
-        self.privatekeyfile_button.setFixedHeight(25)  # Set fixed height
+        self.privatekeyfile_button = QPushButton("Select private key file")        
         self.privatekeyfile_button.clicked.connect(lambda: self.pick_privatekey_file())
+        self.privatekeyfile_button.setStyleSheet("font-size: 18px; padding: 10px;")
         self.privatekeyfile_label = QLabel("No private key selected")
-
-        # Layout for file picker 1
-        privatekeyfile_layout = QHBoxLayout()
-        privatekeyfile_layout.addStretch()
-        privatekeyfile_layout.addWidget(self.privatekeyfile_button)
-        privatekeyfile_layout.addWidget(self.privatekeyfile_label)
-        privatekeyfile_layout.addStretch()
+        self.privatekeyfile_label.setStyleSheet("font-size: 12px; padding: 10px;")
 
         self.analysis_output_label = QLabel("Calculation Time:")
         self.analysis_output = QTextEdit()
         self.analysis_output.setReadOnly(True)
         self.analysis_output.setStyleSheet("font-size: 13px; padding: 5px; height: 10px;")
-
-        # Layout for inputs
-        input_layout = QVBoxLayout()
-        input_layout.addLayout(docfile_layout)
-        input_layout.addLayout(privatekeyfile_layout)
 
         # Create and configure the "Sign" button
         sign_button = QPushButton("Sign Document")
@@ -73,31 +44,64 @@ class SignPage(QWidget):
         save_button.setStyleSheet("font-size: 18px; padding: 10px;")
         save_button.clicked.connect(self.save_sigfile_btn_clicked)
 
-        # Layout for button
-        button_layout = QHBoxLayout()
-        button_layout.addStretch(1)
-        button_layout.addWidget(sign_button)
-        button_layout.addWidget(save_button)
-        button_layout.addStretch(1)
-
-        back_button = QPushButton("Back")
-        back_button.setStyleSheet("font-size: 18px; padding: 10px;")
-        back_button.clicked.connect(self.go_back)
+        # back_button = QPushButton("Back")
+        # back_button.setStyleSheet("font-size: 18px; padding: 10px;")
+        # back_button.clicked.connect(self.go_back)
 
         clear_button = QPushButton("Clear")
         clear_button.setStyleSheet("font-size: 18px; padding: 10px;")
         clear_button.clicked.connect(self.clear)
 
         layout = QVBoxLayout()
-        layout.addWidget(pageLabel)
-        layout.addLayout(input_layout)
-        layout.addLayout(button_layout)
-        layout.addWidget(clear_button)
-        layout.addWidget(back_button)
-        layout.setAlignment(pageLabel, Qt.AlignmentFlag.AlignCenter)
-        layout.setAlignment(back_button, Qt.AlignmentFlag.AlignCenter)
-        layout.setAlignment(clear_button, Qt.AlignmentFlag.AlignCenter)
 
+        pageLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        pageLabel.setStyleSheet("font-size: 24px; font-weight: bold; margin: 20px;")
+        layout.addWidget(pageLabel)
+
+        # Input area
+        input_layout = QVBoxLayout()
+        input_layout.setSpacing(15)        
+
+        # Re-create docfile layout
+        docfile_col = QVBoxLayout()
+        docfile_col.addWidget(self.docfile_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        docfile_col.addWidget(self.docfile_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        input_layout.addLayout(docfile_col)
+
+        # Re-create private key layout
+        privatekey_col = QVBoxLayout()
+        privatekey_col.addWidget(self.privatekeyfile_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        privatekey_col.addWidget(self.privatekeyfile_label, alignment=Qt.AlignmentFlag.AlignCenter)        
+        input_layout.addLayout(privatekey_col)
+
+        layout.addLayout(input_layout)
+
+        # Action buttons
+        action_layout = QVBoxLayout()
+        sign_button.setStyleSheet("font-size: 16px; padding: 10px;")
+        save_button.setStyleSheet("font-size: 16px; padding: 10px;")
+        action_layout.addWidget(sign_button)
+        action_layout.addWidget(save_button)
+        action_layout.setSpacing(15)
+        action_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addLayout(action_layout)
+
+        # Analysis output
+        # layout.addSpacing(20)
+        # layout.addWidget(self.analysis_output_label)
+        # layout.addWidget(self.analysis_output)
+
+        # Footer buttons
+        footer_layout = QHBoxLayout()
+        footer_layout.addStretch()
+        footer_layout.addWidget(clear_button)
+        # footer_layout.addWidget(back_button)
+        footer_layout.addStretch()
+        footer_layout.setSpacing(20)
+        layout.addSpacing(30)
+        layout.addLayout(footer_layout)
+
+        layout.addStretch()
         self.setLayout(layout)
 
         self.docfile_path = None

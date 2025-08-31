@@ -17,76 +17,31 @@ class VerifyPage(QWidget):
         pageLabel = QLabel("Verify Documents")
         pageLabel.setStyleSheet("font-size: 24px; padding: 10px;")
 
-        #  Create and configure labels
-        self.shift_label = QLabel("Key:")
-        self.plaintext_label = QLabel("Plaintext:")
-        self.ciphertext_label = QLabel("Ciphertext:")
-
-        # # Create and configure input fields
-        # self.shift_input = QTextEdit()        
-        # self.shift_input.setPlaceholderText("Key must be one of 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23 and 25")
-        # self.shift_input.setStyleSheet("font-size: 18px; padding: 5px; height: 20px; ")
-
         self.docfile_button = QPushButton("Select document file")
-        self.docfile_button.setFixedWidth(150)  # Set fixed width
-        self.docfile_button.setFixedHeight(25)  # Set fixed height
+        self.docfile_button.setStyleSheet("font-size: 18px; padding: 10px;")
         self.docfile_button.clicked.connect(lambda: self.pick_doc_file())
         self.docfile_label = QLabel("No file selected")
+        self.docfile_label.setStyleSheet("font-size: 12px; padding: 10px;")
 
-        # Layout for file picker 1
-        docfile_layout = QHBoxLayout()
-        docfile_layout.addStretch()
-        docfile_layout.addWidget(self.docfile_button)
-        docfile_layout.addWidget(self.docfile_label)
-        docfile_layout.addStretch()
-
-        self.sigfile_button = QPushButton("Select signature file")
-        self.sigfile_button.setFixedWidth(150)  # Set fixed width
-        self.sigfile_button.setFixedHeight(25)  # Set fixed height
+        self.sigfile_button = QPushButton("Select signature file")        
         self.sigfile_button.clicked.connect(lambda: self.pick_sig_file())
         self.sigfile_label = QLabel("No signature selected")
+        self.sigfile_label.setStyleSheet("font-size: 12px; padding: 10px;")
 
-        # Layout for file picker 2
-        sigfile_layout = QHBoxLayout()
-        sigfile_layout.addStretch()
-        sigfile_layout.addWidget(self.sigfile_button)
-        sigfile_layout.addWidget(self.sigfile_label)
-        sigfile_layout.addStretch()
-
-        self.publickeyfile_button = QPushButton("Select public key file")
-        self.publickeyfile_button.setFixedWidth(150)  # Set fixed width
-        self.publickeyfile_button.setFixedHeight(25)  # Set fixed height
+        self.publickeyfile_button = QPushButton("Select public key file")        
         self.publickeyfile_button.clicked.connect(lambda: self.pick_publickey_file())
         self.publickeyfile_label = QLabel("No public key selected")
-
-        # Layout for file picker 1
-        publickeyfile_layout = QHBoxLayout()
-        publickeyfile_layout.addStretch()
-        publickeyfile_layout.addWidget(self.publickeyfile_button)
-        publickeyfile_layout.addWidget(self.publickeyfile_label)
-        publickeyfile_layout.addStretch()
+        self.publickeyfile_label.setStyleSheet("font-size: 12px; padding: 10px;")
 
         self.analysis_output_label = QLabel("Calculation Time:")
         self.analysis_output = QTextEdit()
         self.analysis_output.setReadOnly(True)
         self.analysis_output.setStyleSheet("font-size: 13px; padding: 5px; height: 10px;")
 
-        # Layout for inputs
-        input_layout = QVBoxLayout()
-        input_layout.addLayout(docfile_layout)
-        input_layout.addLayout(sigfile_layout)
-        input_layout.addLayout(publickeyfile_layout)
-
         # Create and configure the "Sign" button
         verify_button = QPushButton("Verify Document")
         verify_button.setStyleSheet("font-size: 18px; padding: 10px;")
         verify_button.clicked.connect(self.verify_btn_clicked)
-
-        # Layout for button
-        button_layout = QHBoxLayout()
-        button_layout.addStretch(1)
-        button_layout.addWidget(verify_button)
-        button_layout.addStretch(1)
 
         back_button = QPushButton("Back")
         back_button.setStyleSheet("font-size: 18px; padding: 10px;")
@@ -97,15 +52,56 @@ class VerifyPage(QWidget):
         clear_button.clicked.connect(self.clear)
 
         layout = QVBoxLayout()
-        layout.addWidget(pageLabel)
-        layout.addLayout(input_layout)
-        layout.addLayout(button_layout)
-        layout.addWidget(clear_button)
-        layout.addWidget(back_button)
-        layout.setAlignment(pageLabel, Qt.AlignmentFlag.AlignCenter)
-        layout.setAlignment(back_button, Qt.AlignmentFlag.AlignCenter)
-        layout.setAlignment(clear_button, Qt.AlignmentFlag.AlignCenter)
 
+        pageLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        pageLabel.setStyleSheet("font-size: 24px; font-weight: bold; margin: 20px;")
+        layout.addWidget(pageLabel)
+
+        # Input fields
+        input_layout = QVBoxLayout()
+        input_layout.setSpacing(15)
+
+        # docfile col        
+        docfile_col = QVBoxLayout()
+        docfile_col.addWidget(self.docfile_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        docfile_col.addWidget(self.docfile_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        input_layout.addLayout(docfile_col)
+
+        # sigfile col
+        sigfile_col = QVBoxLayout()
+        sigfile_col.addWidget(self.sigfile_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        sigfile_col.addWidget(self.sigfile_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        input_layout.addLayout(sigfile_col)
+
+        # public key col
+        publickey_col = QVBoxLayout()
+        publickey_col.addWidget(self.publickeyfile_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        publickey_col.addWidget(self.publickeyfile_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        input_layout.addLayout(publickey_col)
+
+        layout.addLayout(input_layout)
+
+        # Verify button
+        verify_button.setStyleSheet("font-size: 16px; padding: 10px;")
+        layout.addSpacing(10)
+        layout.addWidget(verify_button, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        # Analysis
+        # layout.addSpacing(20)
+        # layout.addWidget(self.analysis_output_label)
+        # layout.addWidget(self.analysis_output)
+
+        # Footer
+        footer_layout = QHBoxLayout()
+        footer_layout.addStretch()
+        footer_layout.addWidget(clear_button)
+        # footer_layout.addWidget(back_button)
+        footer_layout.addStretch()
+        footer_layout.setSpacing(20)
+        layout.addSpacing(30)
+        layout.addLayout(footer_layout)
+
+        layout.addStretch()
         self.setLayout(layout)
 
         self.docfile_path = None

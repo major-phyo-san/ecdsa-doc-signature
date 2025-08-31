@@ -3,6 +3,8 @@ import psutil
 import time
 import tracemalloc
 
+from datetime import datetime
+
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QComboBox, QTextEdit, QMessageBox, QFileDialog, QDialog
 from PyQt6.QtCore import Qt
 
@@ -12,62 +14,52 @@ from helpers.keygen import generate_keypair
 class KeygenPage(QWidget):
     def __init__(self,stack):
         super().__init__()
-
         self.stack = stack
         self.keypair = {}
 
         pageLabel = QLabel("Key Pair Generation")
-        pageLabel.setStyleSheet("font-size: 24px; padding: 10px;")
+        pageLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        pageLabel.setStyleSheet("font-size: 24px; font-weight: bold; margin: 20px;")
 
-        # Create and configure select box
-        self.options = {
-            "ed25519",  # default
-            "secp224r1",
-            "secp256k1",  # Used in Bitcoin & Ethereum
-            "secp256r1",  # General-Purpose (Web, TLS, Digital Signatures, Blockchain), (NIST P-256), Same as prime256v1
-            "secp384r1",  # Higher Security (Government, Long-Term Security)
-            "secp521r1",  # Ultra-Secure (Rare Use Cases, High Computational Power)
-            "prime192v1",  # Same as secp192r1
-            "prime256v1",  # Same as secp256r1
-        }
         self.select_box = QComboBox()
-        self.select_box.addItems(self.options)
-        self.select_box.setStyleSheet("font-size: 18px; padding: 5px; width: 120px; height: 30px;")
+        self.select_box.addItems({"secp384r1"})
+        self.select_box.setStyleSheet("font-size: 16px; padding: 6px;")
 
-        #  Create and configure buttons
-        keygen_button = QPushButton("Generate Public/Private Key Pair")
-        keygen_button.setStyleSheet("font-size: 18px; padding: 10px;")
-        keygen_button.clicked.connect(self.keygen_btn_clicked)
-
-        # Create and configure the "Save As" button
+        keygen_button = QPushButton("Generate Key Pair")
         save_button = QPushButton("Save Key Pair")
-        save_button.setStyleSheet("font-size: 18px; padding: 10px;")
-        save_button.clicked.connect(self.save_keys)
-
-        # Layout for button
-        button_layout = QHBoxLayout()
-        button_layout.addStretch(1)
-        button_layout.addWidget(self.select_box)
-        button_layout.addWidget(keygen_button)
-        button_layout.addWidget(save_button)
-        button_layout.addStretch(1)
-
+        clear_button = QPushButton("Clear")
         back_button = QPushButton("Back")
-        back_button.setStyleSheet("font-size: 18px; padding: 10px;")
+
+        for btn in (keygen_button, save_button, clear_button, back_button):
+            btn.setStyleSheet("font-size: 16px; padding: 10px;")
+        keygen_button.clicked.connect(self.keygen_btn_clicked)
+        save_button.clicked.connect(self.save_keys)
+        clear_button.clicked.connect(self.clear)
         back_button.clicked.connect(self.go_back)
 
-        clear_button = QPushButton("Clear")
-        clear_button.setStyleSheet("font-size: 18px; padding: 10px;")
-        clear_button.clicked.connect(self.clear)
+        # Group main action buttons
+        action_layout = QVBoxLayout()
+        action_layout.addWidget(self.select_box)
+        action_layout.addWidget(keygen_button)
+        action_layout.addWidget(save_button)
+        action_layout.setSpacing(15)
+        action_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # Footer layout
+        footer_layout = QHBoxLayout()
+        footer_layout.addStretch()
+        footer_layout.addWidget(clear_button)
+        # footer_layout.addWidget(back_button)
+        footer_layout.addStretch()
+        footer_layout.setSpacing(20)
 
         layout = QVBoxLayout()
         layout.addWidget(pageLabel)
-        layout.addLayout(button_layout)
-        layout.addWidget(clear_button)     
-        layout.addWidget(back_button)       
-        layout.setAlignment(pageLabel, Qt.AlignmentFlag.AlignCenter)
-        layout.setAlignment(back_button, Qt.AlignmentFlag.AlignCenter)
-        layout.setAlignment(clear_button, Qt.AlignmentFlag.AlignCenter)
+        layout.addSpacing(10)
+        layout.addLayout(action_layout)
+        layout.addSpacing(30)
+        layout.addLayout(footer_layout)
+        layout.addStretch()
 
         self.setLayout(layout)
 
@@ -106,11 +98,12 @@ class KeygenPage(QWidget):
         directory = QFileDialog.getExistingDirectory(self, "Select Save Directory")
 
         if directory:  # Ensure the user selected a valid directory
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
             public_key = self.keypair["public_pem"]
             private_key = self.keypair["private_pem"]
             # Define fixed file names
-            private_key_name = f"{self.select_box.currentText()}_private.pem"
-            public_key_name = f"{self.select_box.currentText()}_public.pem"
+            private_key_name = f"{timestamp}_{self.select_box.currentText()}_private.pem"
+            public_key_name = f"{timestamp}_{self.select_box.currentText()}_public.pem"
             public_key_path = os.path.join(directory, public_key_name)
             private_key_path = os.path.join(directory, private_key_name)
 
