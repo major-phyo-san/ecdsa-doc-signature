@@ -81,10 +81,10 @@ class KeygenPage(QWidget):
         end_time = time.time()
         current, peak = tracemalloc.get_traced_memory()
         time_taken_ms = (end_time - start_time) * 1000
-        cpu_usage, memory_usage = self.monitor_resources()
-        print(f"Time taken {round(time_taken_ms, 4)} ms")
-        print(f"CPU usage {cpu_usage} %")
-        print(f"Memory usage {memory_usage} %")
+        # cpu_usage, memory_usage = self.monitor_resources()
+        # print(f"Time taken {round(time_taken_ms, 4)} ms")
+        # print(f"CPU usage {cpu_usage} %")
+        # print(f"Memory usage {memory_usage} %")
         QMessageBox.information(self, "Success", f"Key pair for {self.select_box.currentText()} generated successfully.")
         # print(self.keypair["private_pem"])
     
