@@ -24,8 +24,6 @@ class MainWindow(QTabWidget):
         self.addTab(self.page2, "Sign Documents")
         self.addTab(self.page3, "Verify Documents")
 
-        self.setTabEnabled(2, False) 
-
 def apply_stylesheet(app):
     app.setStyleSheet("""
         QWidget {

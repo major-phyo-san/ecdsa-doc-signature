@@ -38,7 +38,7 @@ class KeygenPage(QWidget):
 
         # Group main action buttons
         action_layout = QVBoxLayout()
-        action_layout.addWidget(self.select_box)
+        # action_layout.addWidget(self.select_box)
         action_layout.addWidget(keygen_button)
         action_layout.addWidget(save_button)
         action_layout.setSpacing(15)
